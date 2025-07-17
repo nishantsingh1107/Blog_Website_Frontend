@@ -24,7 +24,9 @@ const Navbar = () => {
                 <Link to="/" className="text-2xl font-extrabold text-blue-600 tracking-wide">Blogify</Link>
                 <div className="flex items-center gap-5">
                     <Link to="/" className="text-blue-600 hover:text-blue-800 transition text-sm font-semibold">Home</Link>
-                    <Link to="/all-blogs" className="text-blue-600 hover:text-blue-800 transition text-sm font-semibold">All Blogs</Link>
+                    {isAuthenticated && (
+                        <Link to="/my-blogs" className="text-blue-600 hover:text-blue-800 transition text-sm font-semibold">My Blogs</Link>
+                    )}
                     <Link to="/create-blog" className="text-blue-600 hover:text-blue-800 transition text-sm font-semibold">Create Blog</Link>
                     <Link to="/about" className="text-blue-600 hover:text-blue-800 transition text-sm font-semibold">About</Link>
                     {!isAuthenticated ? (

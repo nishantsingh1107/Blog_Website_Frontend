@@ -39,7 +39,7 @@ const CreateBlogPage = () => {
     return (
         <div>
             <Navbar />
-            <div className="flex flex-col items-center justify-center mt-10 px-4">
+            <div className="flex flex-col items-center justify-center mt-10 px-4 pb-16">
                 <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8 border border-blue-100">
                     <h2 className="text-3xl font-extrabold text-blue-700 mb-6 text-center">Create a New Blog</h2>
                     <form onSubmit={handleSubmit} className="space-y-6">

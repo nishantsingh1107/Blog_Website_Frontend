@@ -5,7 +5,6 @@ import { SignupPage } from "./pages/SignupPage";
 import { LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { AllBlogsPage } from "./pages/AllBlogsPage";
 import { CreateBlogPage } from "./pages/CreateBlogPage";
 import { EditBlogPage } from "./pages/EditBlogPage";
 import { MyBlogsPage } from "./pages/MyBlogsPage";
@@ -37,7 +36,7 @@ const App = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>
         );
@@ -49,7 +48,6 @@ const App = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/all-blogs" element={<AllBlogsPage />} />
                 <Route path="/create-blog" element={<CreateBlogPage />} />
                 <Route path="/edit-blog/:id" element={<EditBlogPage />} />
                 <Route path="/my-blogs" element={<MyBlogsPage />} />
