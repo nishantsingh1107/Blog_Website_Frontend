@@ -10,10 +10,9 @@ const HomePage = () => {
     useEffect(() => {
         const fetchAllBlogs = async () => {
             try {
-                const resp = await axiosInstance.get("/blogs/all-blogs",{
+                const resp = await axiosInstance.get("/all-blogs",{
                     withCredentials: true
                 });
-                console.log(resp.data)
                 if (resp.data.isSuccess) {
                     setBlogs(resp.data.data.blogs || []);
                 } else {
@@ -44,7 +43,7 @@ const HomePage = () => {
                                 <h2 className="text-2xl font-bold text-blue-700 mb-2">{blog.title}</h2>
                                 <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: blog.content }} />
                                 {blog.author && (
-                                    <p className="text-sm text-gray-600 mt-2">By: {blog.author.name || blog.author.email || "Unknown"}</p>
+                                    <p className="text-sm text-gray-600 mt-2">By: {blog.author.email || "Unknown"}</p>
                                 )}
                                 <p className="text-xs text-gray-400 mt-1">Created: {new Date(blog.createdAt).toLocaleString()}</p>
                             </div>
