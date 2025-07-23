@@ -3,7 +3,7 @@ import React from "react";
 const BlogCard = ({ blog, onClick, onEdit, onDelete, isDeleting }) => {
     const snippet = blog.content.replace(/<[^>]+>/g, '').slice(0, 100) + (blog.content.length > 100 ? '...' : '');
     return (
-        <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow p-4 border border-blue-200 cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-200 relative flex flex-col h-full min-h-[100px]">
+        <div className="bg-gradient rounded-xl shadow p-4 border border-blue-200 cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-200 relative flex flex-col h-full min-h-[100px]">
             <div className="flex-1" onClick={onClick}>
                 <h2 className="text-lg font-bold text-blue-700 mb-1">{blog.title}</h2>
                 <p className="text-gray-700 text-sm mb-2">{snippet}</p>
