@@ -39,8 +39,8 @@ const Navbar = () => {
                         <>
                             <Link to="/profile" className="ml-2">
                                 <div className="w-9 h-9 rounded-full bg-blue-200 flex items-center justify-center overflow-hidden border-2 border-blue-400 hover:border-blue-600 transition">
-                                    {user?.profileImage ? (
-                                        <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                                    {user?.imageUrl ? (
+                                        <img src={user.imageUrl} alt="Profile" className="w-full h-full object-cover" />
                                     ) : (
                                         <span className="text-blue-700 font-bold text-lg">{user?.email ? user.email[0].toUpperCase() : "U"}</span>
                                     )}

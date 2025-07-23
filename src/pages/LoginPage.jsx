@@ -6,8 +6,10 @@ import { ErrorToast, SuccessToast } from "../utils/toastHelper";
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleRegister = async () => {
+        setIsLoading(true);
         try {
             if (!email || !password) {
                 ErrorToast("Email & password are required!");
@@ -28,7 +30,9 @@ const LoginPage = () => {
                 ErrorToast(result.data.message);
             }
         } catch (err) {
-            ErrorToast(`Cannot signup: ${err.response?.data?.message || err.message}`);
+            ErrorToast(`Cannot login: ${err.response?.data?.message || err.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -73,9 +77,10 @@ const LoginPage = () => {
 
                 <button
                     onClick={handleRegister}
-                    className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium shadow"
+                    disabled={isLoading}
+                    className={`mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium shadow ${isLoading ? 'animate-pulse opacity-70 cursor-not-allowed' : ''}`}
                 >
-                    Login
+                    {isLoading ? "Logging in..." : "Login"}
                 </button>
 
                 <p className="mt-6 text-center text-sm text-blue-600">

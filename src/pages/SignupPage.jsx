@@ -8,10 +8,12 @@ const SignupPage = () => {
     const [otp, setOtp] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async () => {
         if (isOtpSent) {
+            setIsLoading(true);
             try {
                 if (!email || !password || !otp) {
                     ErrorToast("Email, password & otp are required!");
@@ -34,6 +36,8 @@ const SignupPage = () => {
                 }
             } catch (err) {
                 ErrorToast(`Cannot signup: ${err.response?.data?.message || err.message}`);
+            } finally {
+                setIsLoading(false);
             }
         } else {
             ErrorToast(`Cannot signup before sending otp`);
@@ -41,6 +45,7 @@ const SignupPage = () => {
     };
 
     const handleSendOtp = async () => {
+        setIsLoading(true);
         try {
             const resp = await axiosInstance.post("/auth/send-otp", {
                 email,
@@ -54,6 +59,8 @@ const SignupPage = () => {
         } catch (err) {
             console.log(err);
             ErrorToast(`Cannot send otp: ${err.response?.data?.message || err.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -118,9 +125,10 @@ const SignupPage = () => {
 
                 <button
                     onClick={isOtpSent ? handleRegister : handleSendOtp}
-                    className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium shadow"
+                    disabled={isLoading}
+                    className={`mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium shadow ${isLoading ? 'animate-pulse opacity-70 cursor-not-allowed' : ''}`}
                 >
-                    {isOtpSent ? "Register" : "Send OTP"}
+                    {isLoading ? "Signing up..." : isOtpSent ? "Register" : "Send OTP"}
                 </button>
 
                 <p className="mt-6 text-center text-sm text-blue-600">

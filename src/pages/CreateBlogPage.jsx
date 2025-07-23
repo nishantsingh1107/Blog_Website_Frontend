@@ -8,9 +8,11 @@ import { axiosInstance } from "../axios/axiosInstance";
 const CreateBlogPage = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (elem) => {
-        elem.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
         try{
             if(!title || !content){
                 ErrorToast("Title and content are required!");
@@ -33,6 +35,8 @@ const CreateBlogPage = () => {
             }
         }catch(err){
             ErrorToast(`Cannot submit blog: ${err.response?.data?.message || err.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -66,9 +70,10 @@ const CreateBlogPage = () => {
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-lg font-semibold shadow"
+                            disabled={isLoading}
+                            className={`w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-lg font-semibold shadow ${isLoading ? 'animate-pulse opacity-70 cursor-not-allowed' : ''}`}
                         >
-                            Publish Blog
+                            {isLoading ? "Publishing..." : "Publish Blog"}
                         </button>
                     </form>
                 </div>
