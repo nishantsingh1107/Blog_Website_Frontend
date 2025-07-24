@@ -8,6 +8,8 @@ const SignupPage = () => {
     const [otp, setOtp] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [gender, setGender] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -15,12 +17,14 @@ const SignupPage = () => {
         if (isOtpSent) {
             setIsLoading(true);
             try {
-                if (!email || !password || !otp) {
-                    ErrorToast("Email, password & otp are required!");
+                if (!email || !password || !otp || !name || !gender) {
+                    ErrorToast("All fields are required!");
                     return;
                 }
 
                 const dataObj = {
+                    name,
+                    gender,
                     email,
                     password,
                     otp,
@@ -83,9 +87,9 @@ const SignupPage = () => {
                             className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             placeholder="Enter your email address"
                             required
+                            disabled={isOtpSent}
                         />
                     </div>
-
                     {isOtpSent && (
                         <>
                             <div>
@@ -103,7 +107,38 @@ const SignupPage = () => {
                                     required
                                 />
                             </div>
-
+                            <div>
+                                <label htmlFor="user-name" className="block text-blue-700 font-medium mb-1">
+                                    Name
+                                </label>
+                                <input
+                                    id="user-name"
+                                    type="text"
+                                    name="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    placeholder="Enter your name"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="user-gender" className="block text-blue-700 font-medium mb-1">
+                                    Gender
+                                </label>
+                                <select
+                                    id="user-gender"
+                                    name="gender"
+                                    value={gender}
+                                    onChange={(e) => setGender(e.target.value)}
+                                    className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    required
+                                >
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
                             <div>
                                 <label htmlFor="user-password" className="block text-blue-700 font-medium mb-1">
                                     Password
@@ -125,10 +160,10 @@ const SignupPage = () => {
 
                 <button
                     onClick={isOtpSent ? handleRegister : handleSendOtp}
-                    disabled={isLoading}
+                    disabled={isLoading || (isOtpSent ? false : !email)}
                     className={`mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium shadow ${isLoading ? 'animate-pulse opacity-70 cursor-not-allowed' : ''}`}
                 >
-                    {isLoading ? "Signing up..." : isOtpSent ? "Register" : "Send OTP"}
+                    {isLoading ? (isOtpSent ? "Signing up..." : "Sending OTP...") : isOtpSent ? "Register" : "Send OTP"}
                 </button>
 
                 <p className="mt-6 text-center text-sm text-blue-600">
