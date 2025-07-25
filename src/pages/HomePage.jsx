@@ -3,11 +3,14 @@ import { Navbar } from "../components/navbar";
 import { axiosInstance } from "../axios/axiosInstance";
 import { ErrorToast } from "../utils/toastHelper";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../contexts/appContext";
 
 const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { user = {} } = useAppContext();
+  const { isAuthenticated } = user;
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -29,6 +32,14 @@ const HomePage = () => {
     fetchAllBlogs();
   }, []);
 
+  const handleCardClick = (blogId) => {
+    if (isAuthenticated) {
+      navigate(`/blog/${blogId}`);
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 flex flex-col items-center">
       <Navbar />
@@ -46,7 +57,7 @@ const HomePage = () => {
               <div
                 key={blog._id}
                 className="bg-gradient rounded-xl shadow p-4 border border-blue-200 cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-200 relative flex flex-col h-full min-h-[100px]"
-                onClick={() => navigate(`/blog/${blog._id}`)}
+                onClick={() => handleCardClick(blog._id)}
               >
                 <div className="flex-1">
                   <h2 className="text-lg font-bold text-blue-700 mb-1">
